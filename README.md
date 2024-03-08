@@ -2,9 +2,34 @@
 
 Template for creating a [Streamlit custom component](https://docs.streamlit.io/library/components) with [Alpine.js](https://alpinejs.dev/).
 
+![Screenshot](/screenshot.png)
+
 ## Developing
 
 1) Install streamlit in a local Python environment : [https://docs.streamlit.io/get-started/installation](https://docs.streamlit.io/get-started/installation)
+
+Create a virtual environment
+```
+python3 -m venv ./venv
+```
+
+Activate the virtual environment (Linux/Mac)
+
+```
+source ./venv/bin/activate
+```
+
+Activate the virtual environment (Windows)
+
+```
+.\venv\Scripts\activate.ps1
+```
+
+Install Streamlit
+
+```
+pip install streamlit
+```
 
 2) Start the example app with:
 
