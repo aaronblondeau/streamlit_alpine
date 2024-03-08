@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlit + Alpine.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Icons = Material Design Icons :  https://fonts.google.com/icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <!-- Styles = Cirrus :  https://www.cirrus-ui.com/ -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cirrus-ui/dist/cirrus.min.css">
+    <!-- Streamlit -->
+    <script type="module">
+        // Couldn't figure out how to get non-esm version to work...
+        import { Streamlit } from 'https://cdn.jsdelivr.net/npm/streamlit-component-lib@2.0.0/+esm'
+        window.Streamlit = Streamlit
+    </script>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body>
+    <h3 x-data>
+        Hello <span x-text="$store.name"></span>
+    </h3>
+    <div x-data="$store.counter">
+        <div>
+            <button x-on:click="incr" class="btn-primary">
+                <span class="material-symbols-outlined" style="font-size: 12px;">
+                    arrow_upward
+                </span>
+                Increment clicks
+            </button>
+        </div>
+        <div>
+            Alpine.js says you've clicked <span x-text="count"></span> times!
+        </div
+    </div>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            // Create an alpine store for the counter
+            Alpine.store('counter', {
+                count: 0,
+    
+                incr() {
+                    this.count = this.count + 1
+                    Streamlit.setComponentValue(this.count)
+                }
+            })
+
+            // Create an alpine store for the name
+            Alpine.store('name', '')
+
+            function onRender(event) {
+                const data = event.detail
+                // Note that this "name" input parameter is defined in __init__.py on line 12
+                const name = data.args["name"]
+                Alpine.store('name', name)
+                // Re-adjust iframe height after updates
+                Streamlit.setFrameHeight()
+            }
+
+            // Attach our `onRender` handler to Streamlit's render event.
+            Streamlit.events.addEventListener(Streamlit.RENDER_EVENT, onRender)
+
+            // Tell Streamlit we're ready to start receiving data. We won't get our
+            // first RENDER_EVENT until we call this function.
+            Streamlit.setComponentReady()
+
+            // Finally, tell Streamlit to update our initial height. We omit the
+            // `height` parameter here to have it default to our scrollHeight.
+            Streamlit.setFrameHeight()
+        })
+    </script>
+</body>
+</html>
