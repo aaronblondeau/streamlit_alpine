@@ -6,7 +6,7 @@ Template for creating a [Streamlit custom component](https://docs.streamlit.io/l
 
 ## Developing
 
-1) Install streamlit in a local Python environment : [https://docs.streamlit.io/get-started/installation](https://docs.streamlit.io/get-started/installation)
+### 1) Install streamlit in a local Python environment : [https://docs.streamlit.io/get-started/installation](https://docs.streamlit.io/get-started/installation)
 
 Create a virtual environment
 ```
@@ -31,13 +31,13 @@ Install Streamlit
 pip install streamlit
 ```
 
-2) Start the example app with:
+### 2) Start the example app with:
 
 ```
 streamlit run example.py
 ```
 
-3) Make edits to streamlit_alpine/index.html
+### 3) Make edits to streamlit_alpine/index.html
 
 Note that you will need to refresh your browser each time you make a change to index.html.
 
